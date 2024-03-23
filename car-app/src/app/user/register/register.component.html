@@ -1,0 +1,21 @@
+<div class="container">
+<div class="form">
+    <header>Signup</header>
+    <form [formGroup]="form" (ngSubmit)="register()">
+      <input type="text" name="username" minlength="5" 
+      placeholder="Enter your username"
+      formControlName="username">
+      <input type="email" name="email" placeholder="Enter your email" formControlName="email">
+      <ng-container formGroupName="passGroup">
+      <input type="password" name="password" placeholder="Create a password" formControlName="password">
+      <input type="password" name="rePassword" placeholder="Confirm your password" formControlName="rePassword">
+      </ng-container>
+      <button class="btn" [disabled]="form.invalid">Signup</button>
+    </form>
+    <div class="signup">
+      <span class="signup">Already have an account?
+       <a routerLink="/auth/login">Login</a>
+      </span>
+    </div>
+  </div>
+</div>

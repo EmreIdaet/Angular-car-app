@@ -1,0 +1,23 @@
+<section class="catalog">
+    <h1>Cars Catalog</h1>
+    <div *ngIf="isLoading">
+        <app-loader />
+    </div>
+    <div *ngIf="!isLoading" class="catalogItems">
+        <div class="cards">
+            <div *ngFor="let car of cars" class="card">
+                <img src='{{car.imgUrl}}' alt="Car-Image">
+                <div class="card-info">
+                    <h2>{{car.brand.toUpperCase()}}</h2>
+                    <p>{{car.carName}}</p>
+                    <p>Likes: <span>{{car.likes?.length || 0}}</span></p>
+                    <p>{{car.description}}</p>
+                    <a routerLink="/cars/{{car._id}}" class="btn">Details</a>
+                </div>
+            </div>
+        </div>
+
+
+        <h3 *ngIf="cars.length == 0">No article yet</h3>
+    </div>
+</section>

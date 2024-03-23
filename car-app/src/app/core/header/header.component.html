@@ -1,0 +1,22 @@
+<header>
+    <nav>
+        <ul>
+            <ng-container *ngIf="isLoggedIn">
+                <li><a>{{ username }}</a></li>
+            </ng-container>
+
+            <li><a routerLink="/">Home</a></li>
+            <li><a routerLink="/cars">Catalog</a></li>
+
+            <ng-container *ngIf="isLoggedIn">
+                <li><a routerLink="/cars/create">Create</a></li>
+                <li><a routerLink="/auth/logout" (click)="logout()">Logout</a></li>
+            </ng-container>
+
+            <ng-container *ngIf="!isLoggedIn">
+                <li><a routerLink="/auth/login">Login</a></li>
+                <li><a routerLink="/auth/register">Register</a></li>
+            </ng-container>
+        </ul>
+    </nav>
+</header>

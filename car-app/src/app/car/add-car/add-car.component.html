@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="registration form">
+    <header>Craete Car</header>
+    <form #form="ngForm" (ngSubmit)="addCar(form)">
+      <input type="text" name="carName" placeholder="Enter car name" ngModel #inputCarName="ngModel" required>
+      <input type="text" name="brand" placeholder="Enter car brand" ngModel #inputBrand="ngModel" required>
+      <input type="text" name="year" placeholder="Enter car year" ngModel #inputYear="ngModel" required>
+      <input type="text" name="color" placeholder="Enter car color" ngModel #inputColor="ngModel" required>
+      <input type="text" name="imgUrl" placeholder="Enter car image (url)" ngModel #inputImgUrl="ngModel" required>
+      <textarea name="description" placeholder="Enter car description" ngModel
+        #textareaDescription="ngModel" required></textarea>
+      <button [disabled]="form.invalid" height="100px" class="btn" >Create</button>
+    </form>
+  </div>
+</div>
