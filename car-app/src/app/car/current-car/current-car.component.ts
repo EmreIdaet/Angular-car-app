@@ -14,31 +14,31 @@ export class CurrentCarComponent implements OnInit {
 
   showEditMode: boolean = false;
 
-  /*form = this.fb.group({
+  form = this.fb.group({
     imgUrl: ['', [Validators.required]],
     carName: ['', [Validators.required]],
     brand: ['', [Validators.required]],
     year: ['', [Validators.required]],
     color: ['', [Validators.required]],
     description: ['', [Validators.required]],
-  })*/
+  })
 
-  constructor(private apiService: ApiService, private activeRoute: ActivatedRoute) { }
+  constructor(private api: ApiService, private activeRoute: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    console.log(this.car);
     
     this.activeRoute.params.subscribe((data) => {
+      
       const id = data['carId'];
-      this.apiService.getCar(id).subscribe((car) => {
+      this.api.getCar(id).subscribe((car) => {
         this.car = car;
-        console.log(this.car);
       });
     });
   }
 
   onToggle() {
     this.ngOnInit()
+    
     this.showEditMode = !this.showEditMode;
   }
 
@@ -50,7 +50,9 @@ export class CurrentCarComponent implements OnInit {
       
       return;
     }
+    
     this.car = form.value as Car;
+    console.log(this.car);
     this.onToggle();
   }
 
