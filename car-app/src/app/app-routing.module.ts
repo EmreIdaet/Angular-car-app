@@ -8,6 +8,9 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+  },{
+    path: 'cars',
+    loadChildren: () => import('./car/car.module').then((m) => m.CarModule),
   },
   //{ path: 'error', component: ErrorComponent },
   { path: '**', redirectTo: '/404' },

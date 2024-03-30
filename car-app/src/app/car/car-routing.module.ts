@@ -6,14 +6,9 @@ import { AddCarComponent } from './add-car/add-car.component';
 import { AuthActivate } from '../guards/auth.activate';
 
 const routes: Routes = [
-    {
-        path: 'cars',
-        children: [
-            { path: '', pathMatch: 'full', component: MainComponent },
-            { path: 'create', component: AddCarComponent, canActivate: [AuthActivate] },
-            { path: ':carId', component: CurrentCarComponent },
-        ]
-    }
+    { path: '', pathMatch: 'full', component: MainComponent },
+    { path: 'create', component: AddCarComponent, canActivate: [AuthActivate] },
+    { path: ':carId', component: CurrentCarComponent },
 ];
 
 @NgModule({
