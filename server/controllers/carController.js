@@ -9,8 +9,12 @@ function getCars(req, res, next) {
 
 function getCar(req, res, next) {
     const { carId } = req.params;
+    console.log(carId)
 
-    carModel.findById(carId).populate('userId');
+    carModel.findById(carId)
+        .populate('userId')
+        .then(cars => res.json(cars))
+        .catch(next);
 }
 
 function createCar(req, res, next) {
