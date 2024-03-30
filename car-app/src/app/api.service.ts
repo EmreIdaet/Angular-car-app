@@ -23,9 +23,18 @@ export class ApiService {
   }
 
   createCar(carName: string, brand: string, year: string, color: string, imgUrl: string, description: string) {
-    const { apiUrl } = environment;
     const payload = { carName, brand, year, color, imgUrl, description }
 
-    return this.http.post<Car>(`${apiUrl}/cars`, payload);
+    return this.http.post<Car>(`/api/cars`, payload);
+  }
+
+  uppdateCar(carName: string, brand: string, year: string, color: string, imgUrl: string, description: string, id: string) {
+    const payload = { carName, brand, year, color, imgUrl, description }
+
+    return this.http.put(`/api/cars/${id}/edit`, payload);
+  }
+
+  deleteCar(id: string) {
+    return this.http.delete(`/api/cars/${id}/delete`, {});
   }
 }

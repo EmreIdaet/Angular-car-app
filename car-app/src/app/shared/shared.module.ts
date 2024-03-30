@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
+import { SlicePipe } from './pipes/slice.pipe';
 
 
 
 @NgModule({
   declarations: [
-    LoaderComponent
+    LoaderComponent,
+    SlicePipe
   ],
   imports: [
     CommonModule
   ],
-  exports: [LoaderComponent],
+  exports: [LoaderComponent, SlicePipe],
 })
 export class SharedModule { }

@@ -26,9 +26,9 @@ export class CurrentCarComponent implements OnInit {
   constructor(private api: ApiService, private activeRoute: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    
+
     this.activeRoute.params.subscribe((data) => {
-      
+
       const id = data['carId'];
       this.api.getCar(id).subscribe((car) => {
         this.car = car;
@@ -37,23 +37,39 @@ export class CurrentCarComponent implements OnInit {
   }
 
   onToggle() {
-    this.ngOnInit()
-    
     this.showEditMode = !this.showEditMode;
   }
 
-  saveCar(form:NgForm) {
+  saveCar(form: NgForm) {
     console.log(form);
-    
+
     if (form.invalid) {
-      console.log("erer");
-      
+      console.log("error");
+
       return;
     }
-    
+
     this.car = form.value as Car;
-    console.log(this.car);
-    this.onToggle();
+    const { carName, brand, year, color, imgUrl, description } = this.car;
+
+    this.activeRoute.params.subscribe((data) => {
+
+      const id = data['carId'];
+
+      console.log(id, carName, brand, year, color, imgUrl, description);
+      this.api.uppdateCar(carName, brand, String(year), color, imgUrl, description, id).subscribe(() => {
+      });
+      this.onToggle();
+    });
+
+  }
+
+  delCar() {
+    this.activeRoute.params.subscribe((data) => {
+      
+      const id = data['carId'];
+      this.api.deleteCar(id);
+    });
   }
 
   onCancel(e: Event) {

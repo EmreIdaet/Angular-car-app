@@ -11,7 +11,7 @@
                     <h2>{{car.brand.toUpperCase()}}</h2>
                     <p>{{car.carName}}</p>
                     <p>Likes: <span>{{car.likes.length || 0}}</span></p>
-                    <p>{{car.description}}</p>
+                    <p>{{car.description | slice}}</p>
                     <a routerLink="/cars/{{car._id}}" class="btn">Details</a>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
-import { ErrorComponent } from './core/error/error.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { appInterceptorProvider } from './app.interceptor';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
 
@@ -15,7 +15,7 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    ErrorComponent,
+    NotFoundComponent,
     AuthenticateComponent,
   ],
   imports: [
