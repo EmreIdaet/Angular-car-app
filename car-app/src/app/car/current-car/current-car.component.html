@@ -9,9 +9,15 @@
         <p>Likes: <span>{{car.likes.length || 0}}</span></p>
         <p>{{car.description}}</p>
 
-        <button class="btn">Like</button>
-        <button (click)="onToggle()" class="btn">Edit</button>
-        <button (click)="delCar()" class="btn">Delete</button>
+        <ng-container *ngIf="isLoggedIn">
+            <ng-container *ngIf="!isOwnerF">
+            <button (click)="likeCar()" class="btn">Like</button>
+            </ng-container>
+            <ng-container *ngIf="isOwnerF">
+            <button (click)="onToggle()" class="btn">Edit</button>
+            <button (click)="delCar()" class="btn">Delete</button>
+            </ng-container>
+        </ng-container>
 
     </section>
 </ng-container>
@@ -21,12 +27,18 @@
         <div class="registration form">
             <form #form="ngForm" (ngSubmit)="saveCar(form)">
                 <header>Edit Car</header>
-                <input type="text" name="imgUrl" placeholder="Enter car image (url)" value="{{car.imgUrl}}" ngModel #inputImgUrl="ngModel" required>
-                <input type="text" name="carName" placeholder="Enter car name" value="{{car.carName}}" ngModel #inputCarName="ngModel" required>
-                <input type="text" name="brand" placeholder="Enter car brand" value="{{car.brand}}" ngModel #inputBrand="ngModel" required>
-                <input type="text" name="year" placeholder="Enter car year" value="{{car.year}}" ngModel #inputYear="ngModel" required>
-                <input type="text" name="color" placeholder="Enter car color" value="{{car.color}}" ngModel #inputColor="ngModel" required>
-                <textarea name="description" placeholder="Enter car description" value="{{car.description}}" ngModel #inputDescription="ngModel" required ></textarea>
+                <input type="text" name="imgUrl" placeholder="Enter car image (url)" value="{{car.imgUrl}}" ngModel
+                    #inputImgUrl="ngModel" required>
+                <input type="text" name="carName" placeholder="Enter car name" value="{{car.carName}}" ngModel
+                    #inputCarName="ngModel" required>
+                <input type="text" name="brand" placeholder="Enter car brand" value="{{car.brand}}" ngModel
+                    #inputBrand="ngModel" required>
+                <input type="text" name="year" placeholder="Enter car year" value="{{car.year}}" ngModel
+                    #inputYear="ngModel" required>
+                <input type="text" name="color" placeholder="Enter car color" value="{{car.color}}" ngModel
+                    #inputColor="ngModel" required>
+                <textarea name="description" placeholder="Enter car description" value="{{car.description}}" ngModel
+                    #inputDescription="ngModel" required></textarea>
                 <button (click)="onCancel($event)" height="100px" class="btn">Cancel</button>
                 <button [disabled]="form.invalid" height="100px" class="btn">Save</button>
             </form>

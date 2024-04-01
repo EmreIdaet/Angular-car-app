@@ -2,7 +2,6 @@ import { User } from "./user";
 
 export interface Car {
     likes: string[];
-    posts: string[];
     _id: string;
     carName: string;
     brand: string;

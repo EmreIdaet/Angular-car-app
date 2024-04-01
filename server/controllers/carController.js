@@ -20,7 +20,7 @@ function getCar(req, res, next) {
 function createCar(req, res, next) {
     const carData = req.body;
 
-    carModel.create(carData)
+    carModel.create(carData);
 }
 
 function editCar(req, res, next) {

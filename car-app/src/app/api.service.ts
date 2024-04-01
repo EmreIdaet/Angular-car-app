@@ -31,10 +31,17 @@ export class ApiService {
   uppdateCar(carName: string, brand: string, year: string, color: string, imgUrl: string, description: string, id: string) {
     const payload = { carName, brand, year, color, imgUrl, description }
 
-    return this.http.put(`/api/cars/${id}/edit`, payload);
+    const { apiUrl } = environment;
+    console.log((`${apiUrl}/cars/${id}/edit`));
+
+    return this.http.put(`${apiUrl}/cars/${id}/edit`, payload);
   }
 
   deleteCar(id: string) {
     return this.http.delete(`/api/cars/${id}/delete`, {});
+  }
+
+  likeCar(id: string, userId: string) {
+    return this.http.put(`/api/likes/${id}`, { like: { userId } })
   }
 }
