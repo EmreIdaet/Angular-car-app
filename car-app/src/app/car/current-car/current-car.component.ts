@@ -3,6 +3,7 @@ import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
 import { Car } from 'src/app/types/car';
+import { UserForAuth } from 'src/app/types/user';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -11,10 +12,10 @@ import { UserService } from 'src/app/user/user.service';
   styleUrls: ['./current-car.component.css']
 })
 export class CurrentCarComponent implements OnInit {
-  car = {} as Car
+  car = {} as Car;
+  user = {} as UserForAuth;
 
   showEditMode: boolean = false;
-  isOwnerF: boolean = this.isOwner();
 
   form = this.fb.group({
     imgUrl: ['', [Validators.required]],
@@ -36,74 +37,69 @@ export class CurrentCarComponent implements OnInit {
         this.car = car;
       });
     });
-  }
-
-  onToggle() {
-    this.showEditMode = !this.showEditMode;
-  }
-
-  likeCar() {
-    this.activeRoute.params.subscribe((data) => {
-      const id = data['carId'];
-      this.userService.getUser().subscribe((userData) => {
-        const userId = userData._id;
-        this.api.likeCar(id, userId);
-
-      })
+    
+    this.userService.getUser().subscribe((userData) => {
+      this.user = userData;
     });
   }
 
-  saveCar(form: NgForm) {
-    console.log(form);
+onToggle() {
+  this.showEditMode = !this.showEditMode;
+}
 
-    if (form.invalid) {
-      console.log("error");
+likeCar() {
+  this.activeRoute.params.subscribe((data) => {
+    const id = data['carId'];
+    this.userService.getUser().subscribe((userData) => {
+      const userId = userData._id;
+      this.api.likeCar(id, userId);
 
-      return;
-    }
+    })
+  });
+}
 
-    this.car = form.value as Car;
-    const { carName, brand, year, color, imgUrl, description } = this.car;
+saveCar(form: NgForm) {
+  console.log(form);
 
-    this.activeRoute.params.subscribe((data) => {
+  if (form.invalid) {
+    console.log("error");
 
-      const id = data['carId'];
+    return;
+  }
 
-      console.log(id, carName, brand, year, color, imgUrl, description);
-      this.api.uppdateCar(carName, brand, String(year), color, imgUrl, description, id).subscribe(() => {
-        this.onToggle();
-      });
+  this.car = form.value as Car;
+  const { carName, brand, year, color, imgUrl, description } = this.car;
+
+  this.activeRoute.params.subscribe((data) => {
+
+    const id = data['carId'];
+
+    console.log(id, carName, brand, year, color, imgUrl, description);
+    this.api.uppdateCar(carName, brand, String(year), color, imgUrl, description, id).subscribe(() => {
+      this.onToggle();
     });
+  });
 
-  }
+}
 
-  delCar() {
-    this.activeRoute.params.subscribe((data) => {
+delCar() {
+  this.activeRoute.params.subscribe((data) => {
 
-      const id = data['carId'];
-      this.api.deleteCar(id);
-    });
-  }
+    const id = data['carId'];
+    this.api.deleteCar(id);
+  });
+}
 
-  onCancel(e: Event) {
-    e.preventDefault();
-    this.onToggle();
-  }
+onCancel(e: Event) {
+  e.preventDefault();
+  this.onToggle();
+}
 
   get isLoggedIn(): boolean {
-    return this.userService.isLogged;
-  }
+  return this.userService.isLogged;
+}
 
-  isOwner(): boolean | any {
-    const user = this.userService.getUser().subscribe((userData) => {
-      const userId = userData._id;
-      console.log(userId == String(this.car.userId._id));
-
-
-      if (userId == String(this.car.userId._id))
-        return true;
-
-      return false;
-    })
-  }
+  get isOwner(): boolean {
+  return !!(this.user._id == String(this.car.userId._id));
+}
 }
