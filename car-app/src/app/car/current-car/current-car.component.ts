@@ -37,69 +37,74 @@ export class CurrentCarComponent implements OnInit {
         this.car = car;
       });
     });
-    
+
     this.userService.getUser().subscribe((userData) => {
       this.user = userData;
     });
   }
 
-onToggle() {
-  this.showEditMode = !this.showEditMode;
-}
-
-likeCar() {
-  this.activeRoute.params.subscribe((data) => {
-    const id = data['carId'];
-    this.userService.getUser().subscribe((userData) => {
-      const userId = userData._id;
-      this.api.likeCar(id, userId);
-
-    })
-  });
-}
-
-saveCar(form: NgForm) {
-  console.log(form);
-
-  if (form.invalid) {
-    console.log("error");
-
-    return;
+  onToggle() {
+    this.showEditMode = !this.showEditMode;
   }
 
-  this.car = form.value as Car;
-  const { carName, brand, year, color, imgUrl, description } = this.car;
+  likeCar() {
+    this.activeRoute.params.subscribe((data) => {
+      const id = data['carId'];
+      this.userService.getUser().subscribe((userData) => {
+        const userId = userData._id;
+        this.api.likeCar(id, userId);
 
-  this.activeRoute.params.subscribe((data) => {
-
-    const id = data['carId'];
-
-    console.log(id, carName, brand, year, color, imgUrl, description);
-    this.api.uppdateCar(carName, brand, String(year), color, imgUrl, description, id).subscribe(() => {
-      this.onToggle();
+      })
     });
-  });
+  }
 
-}
+  saveCar(form: NgForm) {
+    console.log(form);
 
-delCar() {
-  this.activeRoute.params.subscribe((data) => {
+    if (form.invalid) {
+      console.log("error");
 
-    const id = data['carId'];
-    this.api.deleteCar(id);
-  });
-}
+      return;
+    }
 
-onCancel(e: Event) {
-  e.preventDefault();
-  this.onToggle();
-}
+    this.car = form.value as Car;
+    const { carName, brand, year, color, imgUrl, description } = this.car;
+
+    this.activeRoute.params.subscribe((data) => {
+
+      const id = data['carId'];
+
+      console.log(id, carName, brand, year, color, imgUrl, description);
+      this.api.uppdateCar(carName, brand, String(year), color, imgUrl, description, id).subscribe(() => {
+        this.onToggle();
+      });
+    });
+
+  }
+
+  delCar() {
+    this.activeRoute.params.subscribe((data) => {
+
+      const id = data['carId'];
+      this.api.deleteCar(id);
+    });
+  }
+
+  onCancel(e: Event) {
+    e.preventDefault();
+    this.onToggle();
+  }
 
   get isLoggedIn(): boolean {
-  return this.userService.isLogged;
-}
+    return this.userService.isLogged;
+  }
 
   get isOwner(): boolean {
-  return !!(this.user._id == String(this.car.userId._id));
-}
+    return !!(this.user._id == String(this.car.userId._id));
+
+  }
+  
+  get isLiked(): boolean {
+    return !!this.car.likes.includes(this.user._id);
+  }
 }

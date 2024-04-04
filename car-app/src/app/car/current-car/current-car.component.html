@@ -11,13 +11,15 @@
 
         <ng-container *ngIf="isLoggedIn">
             <ng-container *ngIf="!isOwner">
-            <button (click)="likeCar()" class="btn">Like</button>
+                <ng-container *ngIf="!isLiked">
+                    <button (click)="likeCar()" class="btn">Like</button>
+                </ng-container>
             </ng-container>
-            
+
             <ng-container *ngIf="isOwner">
                 <button (click)="onToggle()" class="btn">Edit</button>
                 <button (click)="delCar()" class="btn">Delete</button>
-                </ng-container>
+            </ng-container>
         </ng-container>
 
     </section>
