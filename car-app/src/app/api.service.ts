@@ -22,8 +22,8 @@ export class ApiService {
     return this.http.get<Car>(`${apiUrl}/cars/${id}`);
   }
 
-  createCar(carName: string, brand: string, year: string, color: string, imgUrl: string, description: string) {
-    const payload = { carName, brand, year, color, imgUrl, description }
+  createCar(carName: string, brand: string, year: string, color: string, imgUrl: string, description: string, userId: string) {
+    const payload = { carName, brand, year, color, imgUrl, description, userId }
 
     return this.http.post<Car>(`/api/cars`, payload);
   }
